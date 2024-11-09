@@ -1,0 +1,21 @@
+starting budget?
+
+balance:
+
+transactions:
+
+  expenses: 
+  - add
+  - rm 
+  - tl
+    planned:
+    actual:
+    diff:
+  
+  income: 
+    - add
+    - rm 
+    - tl
+    planned:
+    actual:
+    diff:
