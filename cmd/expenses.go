@@ -7,6 +7,7 @@ import (
 	"log"
 
 	"github.com/hunterMotko/budgot/internal/database"
+	"github.com/hunterMotko/budgot/internal/utils"
 	"github.com/hunterMotko/budgot/internal/views"
 	"github.com/spf13/cobra"
 )
@@ -17,7 +18,10 @@ var expensesCmd = &cobra.Command{
 	Short: "Show current planned, actual, and diff of Expenses",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		service := database.New(dbPath)
+		if !utils.CheckDBFileExists(conf) {
+			log.Fatal("DB File does not exist")
+		}
+		service := database.New(conf.String())
 		pe, err := service.GetPlannedExpense()
 		if err != nil {
 			log.Fatalf("GET PLANNED ERROR: %v", err)

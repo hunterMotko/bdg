@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/charmbracelet/lipgloss"
+	"github.com/hunterMotko/budgot/internal/config"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/lucasb-eyer/go-colorful"
 )
@@ -50,6 +51,7 @@ func ValidDateStr(date string) error {
 	}
 	return nil
 }
+
 func checkMonth(month string) error {
 	i, err := ParseInt(month)
 	if err != nil {
@@ -60,6 +62,7 @@ func checkMonth(month string) error {
 	}
 	return nil
 }
+
 func checkDay(day string) error {
 	i, err := ParseInt(day)
 	if err != nil {
@@ -70,6 +73,7 @@ func checkDay(day string) error {
 	}
 	return nil
 }
+
 func checkYear(year string) error {
 	curYear := time.Now().Year()
 	i, err := ParseInt(year)
@@ -94,6 +98,7 @@ func ParseInt(n string) (int, error) {
 	}
 	return int(i), nil
 }
+
 func ParseAmount(amt string) (float64, error) {
 	n, err := strconv.ParseFloat(amt, 64)
 	if err != nil {
@@ -102,18 +107,11 @@ func ParseAmount(amt string) (float64, error) {
 	return n, nil
 }
 
-func CheckDB(configFile string) error {
-	home, err := os.UserHomeDir()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "\nHOME ENV ERROR: %v\n", err)
+func CheckDBFileExists(conf *config.Config) bool {
+	if _, err := os.Stat(conf.String()); errors.Is(err, os.ErrNotExist) {
+    return false
 	}
-	if configFile == "" {
-		configFile = fmt.Sprintf("%s/%s", home, ".config/budgot/conf")
-	}
-	if _, err := os.Stat(configFile); errors.Is(err, os.ErrNotExist) {
-		return configFileErr
-	}
-	return nil
+	return true
 }
 
 func FormatTimeNow() time.Time {

@@ -1,5 +1,5 @@
 /*
-Copyright © 2024 NAME HERE huntermotko.dev@gmail.com
+Copyright © 2024 Hunter Motko huntermotko.dev@gmail.com
 */
 package main
 

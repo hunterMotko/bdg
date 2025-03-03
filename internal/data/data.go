@@ -56,7 +56,7 @@ func (id *InitData) Process() map[int]float64 {
 	res := make(map[int]float64)
 	vals := reflect.ValueOf(*id)
 	tp := vals.Type()
-	for i := 0; i < vals.NumField(); i++ {
+	for i := range vals.NumField() {
 		key := strings.ToLower(tp.Field(i).Name)
 		val := vals.Field(i).String()
 		if key == "" {
@@ -108,79 +108,31 @@ func (r *Record) GetCategory() int {
 }
 
 func categoryInt(str string) int {
-	switch str {
-	case "food":
-		return Food
-	case "gifts":
-		return Gifts
-	case "medical":
-		return Medical
-	case "home":
-		return Home
-	case "transportation":
-		return Transportation
-	case "personal":
-		return Personal
-	case "pets":
-		return Pets
-	case "utilities":
-		return Utilities
-	case "travel":
-		return Travel
-	case "debt":
-		return Debt
-	case "ex_other":
-		return Ex_other
-	case "savings":
-		return Savings
-	case "paycheck":
-		return Paycheck
-	case "bonus":
-		return Bonus
-	case "interest":
-		return Interest
-	case "in_other":
-		return In_other
+	var dm = map[string]int{
+		"food": Food, "gifts": Gifts, "medical": Medical, "home": Home,
+		"transportation": Transportation, "personal": Personal, "pets": Pets, "utilities": Utilities,
+		"travel": Travel, "debt": Debt, "ex_other": Ex_other, "savings": Savings,
+		"paycheck": Paycheck, "bonus": Bonus, "interest": Interest, "in_other": In_other,
 	}
-	return 0
+	v, ok := dm[str]
+	if !ok {
+		return 0
+	}
+	return v
 }
 
 func CategoryString(n int) string {
-	switch n {
-	case 1:
-		return "food"
-	case 2:
-		return "gifts"
-	case 3:
-		return "medical"
-	case 4:
-		return "home"
-	case 5:
-		return "transportation"
-	case 6:
-		return "personal"
-	case 7:
-		return "pets"
-	case 8:
-		return "utilities"
-	case 9:
-		return "travel"
-	case 10:
-		return "debt"
-	case 11:
-		return "ex_other"
-	case 12:
-		return "savings"
-	case 13:
-		return "paycheck"
-	case 14:
-		return "bonus"
-	case 15:
-		return "interest"
-	case 16:
-		return "in_other"
+	var dm = map[int]string{
+		1: "food", 2: "gifts", 3: "medical", 4: "home",
+		5: "transportation", 6: "personal", 7: "pets", 8: "utilities",
+		9: "travel", 10: "debt", 11: "ex_other", 12: "savings",
+		13: "paycheck", 14: "bonus", 15: "interest", 16: "in_other",
 	}
-	return ""
+	v, ok := dm[n]
+	if !ok {
+		return ""
+	}
+	return v
 }
 
 type Sums struct {
@@ -194,15 +146,19 @@ type Sums struct {
 func (s *Sums) CalcPercChange(end float64) float64 {
 	return float64((end / s.Start) - 1)
 }
+
 func (s *Sums) ExpensePerc() float64 {
-  return float64((s.TotalExpense/s.PlannedExpense)-1)
+	return float64((s.TotalExpense / s.PlannedExpense) - 1)
 }
+
 func (s *Sums) IncomePerc() float64 {
-  return float64((s.TotalIncome/s.PlannedIncome)-1)
+	return float64((s.TotalIncome / s.PlannedIncome) - 1)
 }
+
 func (s *Sums) CalcEndBal() float64 {
 	return s.Start + (s.TotalIncome - s.TotalExpense)
 }
+
 func (s *Sums) Saved(end float64) float64 {
 	return end - s.Start
 }

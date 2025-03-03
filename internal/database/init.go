@@ -59,14 +59,12 @@ func (s *service) AddPlanned(mp map[int]float64) map[string]string {
 			"message": err.Error(),
 		}
 	}
-
 	stmt, err := tx.Prepare("INSERT INTO categories(name, planned) VALUES(?, ?)")
 	if err != nil {
 		return map[string]string{
 			"message": err.Error(),
 		}
 	}
-
 	defer stmt.Close()
   for i := 1; i < 17; i++ {
     key := data.CategoryString(i)
@@ -77,14 +75,12 @@ func (s *service) AddPlanned(mp map[int]float64) map[string]string {
 			}
 		}
 	}
-
 	err = tx.Commit()
 	if err != nil {
 		return map[string]string{
 			"message": err.Error(),
 		}
 	}
-
 	return map[string]string{
 		"message": "success",
 	}

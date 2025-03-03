@@ -7,6 +7,7 @@ import (
 	"log"
 
 	"github.com/hunterMotko/budgot/internal/database"
+	"github.com/hunterMotko/budgot/internal/utils"
 	"github.com/hunterMotko/budgot/internal/views"
 	"github.com/spf13/cobra"
 )
@@ -18,7 +19,10 @@ var incomeCmd = &cobra.Command{
 	Long: `
   `,
 	Run: func(cmd *cobra.Command, args []string) {
-    service := database.New(dbPath)
+		if !utils.CheckDBFileExists(conf) {
+			log.Fatal("DB File does not exist")
+		}
+    service := database.New(conf.String())
     pl, err := service.GetPlannedIncome()
     if err != nil {
 		  log.Fatalf("GET PLANNED ERROR: %v", err)

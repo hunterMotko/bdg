@@ -6,6 +6,7 @@ import (
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/hunterMotko/budgot/internal/database"
+	"github.com/hunterMotko/budgot/internal/utils"
 	"github.com/hunterMotko/budgot/internal/views"
 	"github.com/spf13/cobra"
 )
@@ -18,7 +19,10 @@ var addExpense = &cobra.Command{
 }
 
 func runExpense(cmd *cobra.Command, args []string) {
-	db := database.New(dbPath)
+  if !utils.CheckDBFileExists(conf) {
+    log.Fatalf("Check file path or use INIT command: %s", conf.String())
+  }
+	db := database.New(conf.String())
 	opts := []string{
 		"food", "gifts", "medical", "home", "transportation", "personal", "pets", "utilities", "travel", "debt", "other",
 	}

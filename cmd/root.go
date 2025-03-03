@@ -4,19 +4,17 @@ Copyright © 2024 hdm <huntermotko.dev@gmail.com>
 package cmd
 
 import (
-	"errors"
 	"fmt"
-	"log"
 	"os"
 
-	"github.com/hunterMotko/budgot/internal/database"
-	"github.com/hunterMotko/budgot/internal/views"
+	"github.com/hunterMotko/budgot/internal/config"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/spf13/cobra"
 )
 
 var (
 	dbPath string
+  conf *config.Config
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -30,21 +28,9 @@ var rootCmd = &cobra.Command{
     Income: View your Income planned - actual - diff 
     Expenses: View your Expenses planned - actual - diff 
   `,
-	Run: run,
-}
-
-func run(cmd *cobra.Command, args []string) {
-	err := checkDbExists()
-	if err != nil {
-		log.Fatal(err)
-	}
-	service := database.New(dbPath)
-	service.Health()
-	sums, err := service.GetSums()
-	if err != nil {
-		log.Fatal(err)
-	}
-  views.RunMain(sums)
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Fprintf(os.Stdout, "%s", cmd.UsageString())
+	},
 }
 
 func Execute() {
@@ -56,20 +42,10 @@ func Execute() {
 
 func init() {
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	dbPathString()
-}
-
-func dbPathString() {
-	home, err := os.UserHomeDir()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "\nHOME ENV ERROR: %v\n", err)
-	}
-	dbPath = fmt.Sprintf("%s/%s/%s", home, os.Getenv("DB_DIR"), os.Getenv("DB_FILE"))
-}
-
-func checkDbExists() error {
-	if _, err := os.Stat(dbPath); errors.Is(err, os.ErrNotExist) {
-		return errors.New("Please Use Init Command before using")
-	}
-	return nil
+  rootCmd.PersistentFlags().StringVarP(&dbPath, "config-path", "c", ".config/budgot", "Config Path string")
+  home, err := os.UserHomeDir()
+  if err != nil {
+    fmt.Fprintf(os.Stderr, "ERROR finding home dir: %v\n", err)
+  }
+  conf = config.NewConfig(home, dbPath, "bg.sqlite")
 }

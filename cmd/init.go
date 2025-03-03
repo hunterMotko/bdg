@@ -26,7 +26,7 @@ var initCmd = &cobra.Command{
   `,
 	Run: func(cmd *cobra.Command, args []string) {
 		CreateSqliteFile()
-		service := database.New(dbPath)
+		service := database.New(conf.String())
 		res := service.Init()
     message := res["message"]
 		if  message != "success" {

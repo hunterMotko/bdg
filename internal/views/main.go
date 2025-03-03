@@ -33,11 +33,11 @@ var (
 	mainStyle          = lipgloss.NewStyle().MarginLeft(2)
 	roundedBorderGroup = lipgloss.NewStyle().Width(40).BorderStyle(lipgloss.RoundedBorder()).BorderForeground(lipgloss.Color("63")).Padding(1, 2)
 	// Gradient colors we'll use for the progress bar
-	ramp = utils.MakeRampStyles("#B14FFF", "#00FFA3", progressBarWidth)
-  docStyle = lipgloss.NewStyle().Margin(1, 2, 1, 2)
+	ramp     = utils.MakeRampStyles("#B14FFF", "#00FFA3", progressBarWidth)
+	docStyle = lipgloss.NewStyle().Margin(1, 2, 1, 2)
 )
 
-func RunMain(sums *data.Sums) {
+func RunSum(sums *data.Sums) {
 	endBalance := sums.CalcEndBal()
 	initialModel := MainModel{
 		sums.Start,
@@ -96,10 +96,10 @@ func (m MainModel) View() string {
 }
 
 func mainView(m MainModel) string {
-  var doc strings.Builder
-  width, height, _ := term.GetSize(int(os.Stdout.Fd()))
-  fmt.Println(width, height)
-  doc.WriteString(strings.Repeat(" ", width))
+	var doc strings.Builder
+	width, height, _ := term.GetSize(int(os.Stdout.Fd()))
+	fmt.Println(width, height)
+	doc.WriteString(strings.Repeat(" ", width))
 
 	var templ strings.Builder
 	var group string
@@ -118,25 +118,24 @@ func mainView(m MainModel) string {
 			m.Saved,
 		)
 	}
+
 	templ.WriteString(lightBlue.Render("Monthly Budogt") + "\n\n")
 	templ.WriteString(roundedBorderGroup.Render(group) + "\n\n")
-
 	low, high := utils.BarPercentages(m.Perc)
 	lowEx, highEx := utils.BarPercentages(m.ExPerc)
 	lowIn, highIn := utils.BarPercentages(m.InPerc)
-
-  // Main bar graph
+	// Main bar graph
 	templ.WriteString(fmt.Sprintf("Start Balance: %s\n", intStyle.Render(fmt.Sprintf("%2.f", m.Start))))
 	templ.WriteString(progressbar(low) + "\n")
 	templ.WriteString(fmt.Sprintf("End Balance: %s\n", intStyle.Render(fmt.Sprintf("%2.f", m.End))))
 	templ.WriteString(progressbar(high) + "\n\n")
-  // Expenses bars
+	// Expenses bars
 	templ.WriteString(lightBlue.Render("Expenses") + "\n")
 	templ.WriteString("Planned: " + intStyle.Render(fmt.Sprintf("%2.f", m.PlannedExpense)) + "\n")
 	templ.WriteString(progressbar(lowEx) + "\n")
 	templ.WriteString("Actual: " + intStyle.Render(fmt.Sprintf("%2.f", m.ActualExpense)) + "\n")
 	templ.WriteString(progressbar(highEx) + "\n\n")
-  // Income bars
+	// Income bars
 	templ.WriteString(lightBlue.Render("Income") + "\n")
 	templ.WriteString("Planned: " + intStyle.Render(fmt.Sprintf("%2.f", m.PlannedIncome)) + "\n")
 	templ.WriteString(progressbar(lowIn) + "\n")
@@ -151,7 +150,7 @@ func progressbar(percent float64) string {
 	w := float64(progressBarWidth)
 	fullSize := int(math.Round(w * percent))
 	var fullCells string
-	for i := 0; i < fullSize; i++ {
+	for i := range fullSize {
 		fullCells += ramp[i].Render(progressFullChar)
 	}
 	emptySize := int(w) - fullSize
