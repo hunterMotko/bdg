@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/hunterMotko/budgot/internal/data"
-	_ "github.com/joho/godotenv/autoload"
 	_ "github.com/mattn/go-sqlite3"
 )
 
