@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/hunterMotko/budgot/internal/data"
+	"github.com/hunterMotko/bdg/internal/data"
 )
 
 func (s *service) InsertExpense(rec *data.Record) map[string]string {

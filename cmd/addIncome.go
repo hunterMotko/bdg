@@ -5,9 +5,9 @@ import (
 	"log"
 
 	"github.com/charmbracelet/lipgloss"
-	"github.com/hunterMotko/budgot/internal/database"
-	"github.com/hunterMotko/budgot/internal/utils"
-	"github.com/hunterMotko/budgot/internal/views"
+	"github.com/hunterMotko/bdg/internal/database"
+	"github.com/hunterMotko/bdg/internal/utils"
+	"github.com/hunterMotko/bdg/internal/views"
 	"github.com/spf13/cobra"
 )
 

@@ -8,8 +8,8 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/hunterMotko/budgot/internal/data"
-	"github.com/hunterMotko/budgot/internal/utils"
+	"github.com/hunterMotko/bdg/internal/data"
+	"github.com/hunterMotko/bdg/internal/utils"
 	"golang.org/x/term"
 )
 

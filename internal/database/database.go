@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/hunterMotko/budgot/internal/data"
+	"github.com/hunterMotko/bdg/internal/data"
 	_ "github.com/mattn/go-sqlite3"
 )
 

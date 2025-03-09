@@ -1,4 +1,4 @@
-module github.com/hunterMotko/budgot
+module github.com/hunterMotko/bdg
 
 go 1.22.5
 

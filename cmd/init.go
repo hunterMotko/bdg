@@ -9,8 +9,9 @@ import (
 	"os"
 
 	"github.com/charmbracelet/lipgloss"
-	"github.com/hunterMotko/budgot/internal/database"
-	"github.com/hunterMotko/budgot/internal/views"
+	"github.com/hunterMotko/bdg/internal/config"
+	"github.com/hunterMotko/bdg/internal/database"
+	"github.com/hunterMotko/bdg/internal/views"
 	"github.com/spf13/cobra"
 )
 
@@ -25,7 +26,7 @@ var initCmd = &cobra.Command{
     What your planned Income
   `,
 	Run: func(cmd *cobra.Command, args []string) {
-		CreateSqliteFile()
+		CreateSqliteFile(conf)
 		service := database.New(conf.String())
 		res := service.Init()
     message := res["message"]
@@ -56,7 +57,7 @@ func init() {
 	rootCmd.AddCommand(initCmd)
 }
 
-func CreateSqliteFile() {
+func CreateSqliteFile(conf *config.Config) {
 	home, err := os.UserHomeDir()
 	if err != nil {
 		log.Fatalf("CONFIG DIR ERROR: %v", err)

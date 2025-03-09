@@ -7,7 +7,7 @@ import (
 	"github.com/charmbracelet/bubbles/table"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
-	"github.com/hunterMotko/budgot/internal/data"
+	"github.com/hunterMotko/bdg/internal/data"
 )
 
 var baseStyle = lipgloss.NewStyle().
@@ -80,7 +80,6 @@ func setTable(rows []table.Row) model {
 func GetTable(planned []data.Category, recs map[int]float64) {
 	rows := mergeData(planned, recs)
 	m := setTable(rows)
-
 	if _, err := tea.NewProgram(m).Run(); err != nil {
 		fmt.Println("ERROR RUNNING PROGRAM: ", err)
 		os.Exit(1)
@@ -90,11 +89,13 @@ func GetTable(planned []data.Category, recs map[int]float64) {
 func mergeData(planned []data.Category, recs map[int]float64) []table.Row {
 	rows := []table.Row{}
 	for _, p := range planned {
-		pln := fmt.Sprintf("%.2f", p.Planned)
-		act := fmt.Sprintf("%.2f", recs[p.Id])
 		sub := p.Planned - recs[p.Id]
-		diff := fmt.Sprintf("%.2f", sub)
-		temp := []string{p.Name, pln, act, diff}
+		temp := []string{
+      p.Name, 
+      fmt.Sprintf("%.2f", p.Planned), 
+      fmt.Sprintf("%.2f", recs[p.Id]), 
+      fmt.Sprintf("%.2f", sub),
+    }
 		rows = append(rows, temp)
 	}
 	return rows

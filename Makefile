@@ -1,4 +1,4 @@
-BINARY_NAME=budgot
+BINARY_NAME=bdg
 GO_FILES=$(wildcard *.go)
 
 build:

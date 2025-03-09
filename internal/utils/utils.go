@@ -11,13 +11,13 @@ import (
 	"time"
 
 	"github.com/charmbracelet/lipgloss"
-	"github.com/hunterMotko/budgot/internal/config"
+	"github.com/hunterMotko/bdg/internal/config"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/lucasb-eyer/go-colorful"
 )
 
 var (
-	configFileErr error = errors.New("Config File Error.\nPlease Use budgot init to configure cli")
+	configFileErr error = errors.New("Config File Error.\nPlease Use bdg init to configure cli")
 	writeFileErr  error = errors.New("FILE WRITE ERROR")
 	dateErr       error = errors.New("Please follow correct date format")
 	monthErr      error = errors.New("Incorrect Month")

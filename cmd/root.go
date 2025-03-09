@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/hunterMotko/budgot/internal/config"
+	"github.com/hunterMotko/bdg/internal/config"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/spf13/cobra"
 )
@@ -42,10 +42,10 @@ func Execute() {
 
 func init() {
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-  rootCmd.PersistentFlags().StringVarP(&dbPath, "config-path", "c", ".config/budgot", "Config Path string")
+  rootCmd.PersistentFlags().StringVarP(&dbPath, "config-path", "c", ".config/bdg", "Config Path string")
   home, err := os.UserHomeDir()
   if err != nil {
     fmt.Fprintf(os.Stderr, "ERROR finding home dir: %v\n", err)
   }
-  conf = config.NewConfig(home, dbPath, "bg.sqlite")
+  conf = config.NewConfig(home, dbPath, "bdg.sqlite")
 }

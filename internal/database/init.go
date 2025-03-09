@@ -1,8 +1,8 @@
 package database
 
 import (
-	"github.com/hunterMotko/budgot/internal/data"
-	"github.com/hunterMotko/budgot/internal/utils"
+	"github.com/hunterMotko/bdg/internal/data"
+	"github.com/hunterMotko/bdg/internal/utils"
 )
 
 func (s *service) Init() map[string]string {

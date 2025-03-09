@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/hunterMotko/budgot/internal/utils"
+	"github.com/hunterMotko/bdg/internal/utils"
 )
 
 const (
